@@ -42,26 +42,23 @@ def main():
             os.system(clear_command)
             print("欢迎使用预测模型，输入内容即可进行对话，clear 清空对话历史，stop 终止程序")
             continue
-        count = 0
-        new_query = """现在，请你扮演游戏预测模型。已知根据AI模型在历史开奖数据上的分析，预测得到本周游戏“万能七码”可能的开奖结果如下：
+        current_length = 0
+        new_query = """现在，请你扮演预测模型。已知根据AI模型在历史开奖数据上的分析，预测得到本周游戏“万能七码”可能的开奖结果如下：
 
         {pred}
 
         请你根据开奖结果回答用户的问题，用户的问题是：{question}"""
         new_query = new_query.replace("{question}", query).replace("{pred}", prediction)
         for response, history in model.stream_chat(tokenizer, new_query, history=history):
-            print("内侧循环\n")
+            # print("内侧循环\n")
             if stop_stream:
                 stop_stream = False
                 break
             else:
-                count += 1
-                if count % 8 == 0:
-                    os.system(clear_command)
-                    print(build_prompt(history), flush=True)
-                    signal.signal(signal.SIGINT, signal_handler)
-        os.system(clear_command)
-        print(build_prompt(history), flush=True)
+                print(response[current_length:], end="", flush=True)
+                current_length = len(response)
+        # os.system(clear_command)
+        # print(build_prompt(history), flush=True)
 
 
 if __name__ == "__main__":
