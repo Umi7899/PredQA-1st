@@ -28,7 +28,7 @@ def signal_handler(signal, frame):
 
 
 def main():
-    history = []
+    # history = []
     global stop_stream
     prediction = lottery_predicter_pl_end.unique_cc_str
     print("欢迎使用预测模型，输入内容即可进行对话，clear 清空对话历史，stop 终止程序")
