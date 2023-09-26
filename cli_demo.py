@@ -49,7 +49,7 @@ def main():
 
         请你根据开奖结果回答用户的问题，用户的问题是：{question}"""
         new_query = new_query.replace("{question}", query).replace("{pred}", prediction)
-        for response, history in model.stream_chat(tokenizer, new_query, history=history):
+        for response, history in model.stream_chat(tokenizer, new_query, history=[]):
             # print("内侧循环\n")
             if stop_stream:
                 stop_stream = False
